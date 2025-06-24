@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>.traj2.xyz Converter for LAMMPS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+        <header class="bg-white shadow-md rounded-lg p-6 mb-8">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">LAMMPS .traj から .xyz への変換・ZIP圧縮ツール</h1>
+            <p class="text-gray-600">.traj ファイルを選択し、抽出するタイムステップの範囲を指定して、「変換してZIPをダウンロード」ボタンを押してください。</p>
+        </header>
+
+        <main class="bg-white shadow-md rounded-lg p-6">
+            <!-- Step 1: File Selection -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">ステップ1: ファイル選択</h3>
+                <label for="traj-file-input" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                    ファイルを選択
+                </label>
+                <input type="file" id="traj-file-input">
+                <p id="file-name" class="mt-3 text-gray-600 italic"></p>
+            </div>
+
+            <!-- Step 2: Parameters -->
+            <div class="mb-8">
+                 <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">ステップ2: パラメータ設定</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label for="start-step" class="block text-sm font-medium text-gray-700">開始タイムステップ</label>
+                        <input type="number" id="start-step" value="0" min="0" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="end-step" class="block text-sm font-medium text-gray-700">終了タイムステップ</label>
+                        <input type="number" id="end-step" value="1000000" min="0" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="interval-step" class="block text-sm font-medium text-gray-700">インターバル</label>
+                        <input type="number" id="interval-step" value="1" min="1" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 3: Conversion -->
+            <div class="text-center">
+                <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">ステップ3: 変換とダウンロード</h3>
+                <button id="convert-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 ease-in-out">
+                    変換してZIPをダウンロード
+                </button>
+            </div>
+
+
+            <div id="result-container" class="mt-6" style="display: none;">
+                <div id="message-box" class="p-4 rounded-md text-center" style="display: none;"></div>
+                <div id="download-container" class="mt-4 text-center">
+                    <!-- ZIPダウンロードリンクがここに追加されます -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
